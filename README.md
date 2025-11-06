@@ -1,109 +1,219 @@
-# Car Rental AI Customer Support
+# Car Warranty & CCP Support Agent
 
-This repository contains a car rental AI customer support system, built using LangGraph AI agents (Zero-Shot Agent) over LLaMA 3 with Groq API integration. The AI agent is applied to a Streamlit demo, where it interacts with the car rental system to provide a seamless customer experience.
+Car Warranty & CCP Support is a Streamlit-based AI assistant that helps vehicle owners manage warranties, file claims, and book service appointments. It combines a login/registration portal, AI-powered customer support, and automated notifications to deliver a dealership-style digital experience.
 
-## Table of Contents
-- [Project Overview](#project-overview)
-- [Features](#features)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [API Integration](#api-integration)
-- [State Management and Error Handling](#state-management-and-error-handling)
-
-## Project Overview
-
-This project showcases an AI-powered customer support agent integrated into a car rental service demo. The agent is designed to handle various tasks related to car rentals, including searching for available cars, booking rentals, checking availability, and managing user information. The agent leverages **LLaMA 3 70B** model, providing powerful language understanding and generation capabilities, while interacting with the backend system through a Streamlit interface.
+---
 
 ## Features
 
-- **AI Customer Support**: The AI agent assists users with booking cars, checking availability, managing reservations and more ...
-- **Zero-Shot Agent**: The Zero-Shot Agent operates with the simplest working implementation, relying on tools provided and prompting it to use them effectively to assist users. 
-- **Groq API Integration**: The AI agent is powered by Groq API, enabling efficient processing of user queries and interactions.
-- **Streamlit Demo**: A fully functional Streamlit demo where the AI agent interacts with the car rental system in real-time.
+- **Customer Portal**
+  - Email-based login/registration with `users.csv`
+  - Streamlined dashboard (only the AI support page is active)
 
-### Core Functionalities:
+- **AI Support Chat**
+  - Powered by Groq’s `openai/gpt-oss-20b` (configurable)
+  - Uses embeddings ([data/vectors.json](cci:7://file:///C:/Users/rohini/OneDrive/Desktop/AI-AGENTS-Costumer-Support-demo/Car-Warranty-System/data/vectors.json:0:0-0:0)) for contextual answers
+  - 16+ LangChain tools for warranty lookups, CCP claims, appointments, notifications
 
-- **Search for Cars**: Search for cars based on various criteria such as name, type, price range, and availability within a specified date range.
-- **Book a Car**: Book a car for a specified period. Bookings are initially pending confirmation and need manual confirmation by the user.
-- **Retrieve Company Policies**: Retrieve company policies related to bookings, cancellations, and other services.
-- **Check Car Availability**: Verify if a specific car is available for the desired dates.
-- **Cancel a Booking**: Cancel an existing booking by updating its status to 'Cancelled'.
-- **Update a Booking**: Modify an existing booking with new start and end dates, ensuring availability for the new dates.
-- **Show Pending Bookings**: Display a list of cars that the user has booked but not yet confirmed.
-- **Show Confirmed Bookings**: Display a list of cars that the user has confirmed bookings for.
-- **Show Booking History**: Display the user’s last 5 bookings history (more than 5 require manual checking).
-- **Show Personal Information**: Display the user’s personal information stored in the system.
-- **Get Car Information**: Provide detailed information about a specific car.
-- **List All Cars**: List all available cars in the inventory.
+- **Warranty & CCP Workflows**
+  - Claim filing with automated CSV updates and unique IDs
+  - CCP coverage reference tables, warranty policy retrieval
+  - Appointment booking with instructions and notifications
 
-## Installation
+- **Multi-Channel Notifications**
+  - Email confirmations (SMTP/Gmail out of the box)
+  - SMS/WhatsApp hooks (Twilio) ready for future use
 
-To run this project locally, follow these steps:
+---
 
-1. Clone the repository:
+## UI Preview
 
-    ```bash
-    git clone https://github.com/Doumiri-Ali/AI-AGENTS-Costumer-Support-demo.git
-    cd AI-AGENTS-Costumer-Support-demo
-    ```
+![AI Customer Support Screenshot](Car-Warranty-System/assets/ai-customer-support.png)
 
-2. Install the required Python packages:
+> Save the screenshot above as `Car-Warranty-System/assets/ai-customer-support.png` (or adjust the path if you prefer a different location) so the image loads correctly when the README is viewed on GitHub.
 
-    ```bash
-    pip install -r requirements.txt
-    ```
+---
 
-3. Set up your environment variables:
-   - `GROQ_API_KEY`: Your API key for Groq.
-   - `$HUGGING_FACE_API_KEY$`: Your API key for Hugging face.
-   - Optionally, set up other API keys if using alternative ANTHROPIC LLM :
-     - `ANTHROPIC_API_KEY`
+## Project Structure
 
-4. Start the Streamlit application:
+```
+AI-AGENTS-Costumer-Support-demo/
+├── main.py                        # Streamlit entry point (auth, navigation)
+├── core.py                        # Warranty, CCP, claim, notification tools
+├── appointment_tools.py           # Appointment scheduling utilities
+├── notification_tools.py          # Email/SMS/WhatsApp notification helpers
+├── conf.py                        # Embeddings, Groq LLM setup, vector retriever
+├── requirements.txt               # Project dependencies
+├── .env                           # Runtime configuration (not tracked)
+├── .env.example                   # Template for credentials
+└── Car-Warranty-System/
+    ├── data/
+    │   ├── users.csv              # Customers
+    │   ├── claims.csv             # Warranty claims
+    │   ├── warranty_policies.md   # Policy corpus for embeddings
+    │   ├── vectors.json           # Cached embeddings
+    │   ├── customer_vehicles.csv  # Vehicle inventory
+    │   ├── warranties.csv         # Extended warranty records
+    │   ├── service_centers.csv    # Service center directory
+    │   └── ccp_packages.csv       # CCP package catalog
+    ├── pages/
+    │   └── customer_support.py    # Streamlit page loaded by main.py
+    └── assets/                    # (Reserved for static assets)
+```
 
-    ```bash
-    streamlit run Rental-Car-Business-Demo/pages/login.py
-    ```
+---
 
+## Prerequisites
 
-## Configuration
+- Python 3.10+
+- Pip (inside the virtual environment)
+- Groq API key (Dev or higher recommended)
+- (Optional) Gmail account with App Password for SMTP
 
-The application uses configuration files to manage various aspects of the system:
+---
 
-- `conf.py`: Contains environment variables and file paths for cars, bookings, user data, manages policy rules and vector store retrieval for policy compliance and document similarity checks.
+## Setup
 
-### Key Configuration Files
-- `company_rules.md`: Contains business rules and policies in Markdown format.
-- `vectors.json`: Stores document vectors for efficient querying and retrieval of policy rules.
+1. **Clone the repo**
 
-## API Integration
+   ```powershell
+   git clone <repo-url>
+   cd AI-AGENTS-Costumer-Support-demo
+   ```
 
-The AI agent interacts with external APIs to generate embeddings and process user queries:
+2. **Create and activate a virtual environment**
 
-- **Groq API**: The primary API used for language model operations.
-- **Hugging Face API**: Used for generating text embeddings for document similarity checks.
+   ```powershell
+   python -m venv .venv
+   .venv\Scripts\Activate.ps1
+   ```
 
-### Key API Endpoints
-- **LLM Operations**: Handles text generation and query processing.
-- **Embedding Generation**: Generates embeddings for documents and queries for policy lookup.
+3. **Install dependencies**
 
-## State Management and Error Handling
+   ```powershell
+   pip install -r requirements.txt
+   ```
 
-The system employs robust state management and error handling mechanisms:
+4. **Configure environment variables**
 
-- **State Management**: Tracks user interactions, tool usage, and assistant responses.
-- **Error Handling**: Captures and manages errors during tool execution, providing feedback to the user.
+   Copy [.env.example](cci:7://file:///c:/Users/rohini/OneDrive/Desktop/AI-AGENTS-Costumer-Support-demo/.env.example:0:0-0:0) to `.env` and populate:
 
-### Key Components
-- **State Management**: Functions to clean and update message states.
-- **Error Handling**: Functions to handle tool errors and provide fallback options.
+   ```env
+   # Groq
+   GROQ_API_KEY=gsk_your_key_here
 
+   # SMTP (Gmail example)
+   SMTP_EMAIL=your_email@gmail.com
+   SMTP_PASSWORD=your_16_char_app_password
+   SMTP_SERVER=smtp.gmail.com
+  SMTP_PORT=587
+   ```
 
-## Presentation Video
+   > For Gmail: enable 2-Step Verification → App Passwords → “Mail” on “Other device” → paste 16-character password (no spaces).
 
-Watch the 10-minute presentation video showcasing the car rental AI customer support system:
+5. **Launch Streamlit**
 
-[Watch the Presentation Video](https://drive.google.com/file/d/1P8LLI2Q6xPwy7oYWgX2q9kElnZkvzTWB/view?usp=sharing)
+   ```powershell
+   streamlit run main.py
+   ```
 
+6. **Login**
 
-### **In this video, you'll see the AI agent interacting with users, including tests with intentionally poor English to demonstrate its ability to handle and understand varied language proficiency. The video includes examples of the AI responding to queries despite non-standard or less accurate English inputs, highlighting its robustness and adaptability in real-world scenarios.**
+   - Use an email from `data/users.csv`, or register a new one from the UI.
+   - After logging in you’ll land on the AI support page.
+
+---
+
+## How the AI Works
+
+1. **Context retrieval**  
+   [warranty_policies.md](cci:7://file:///C:/Users/rohini/OneDrive/Desktop/AI-AGENTS-Costumer-Support-demo/Car-Warranty-System/data/warranty_policies.md:0:0-0:0) is split into sections and converted to embeddings via HuggingFace (`jinaai/jina-embeddings-v2-base-en`). Cached in [data/vectors.json](cci:7://file:///C:/Users/rohini/OneDrive/Desktop/AI-AGENTS-Costumer-Support-demo/Car-Warranty-System/data/vectors.json:0:0-0:0).
+
+2. **Tool-enabled conversation**  
+   [core.py](cci:7://file:///c:/Users/rohini/OneDrive/Desktop/AI-AGENTS-Costumer-Support-demo/core.py:0:0-0:0) exposes LangChain tools for claims, appointments, warranties, etc. The Groq LLM orchestrates these tools based on user messages.
+
+3. **Claim filing flow**  
+   - `file_ccp_claim` checks vehicle + CCP status.
+   - Appends claim to [claims.csv](cci:7://file:///C:/Users/rohini/OneDrive/Desktop/AI-AGENTS-Costumer-Support-demo/Car-Warranty-System/data/claims.csv:0:0-0:0) with ID and reference (CCP000001…).
+   - Sends confirmation email via [send_email_notification](cci:1://file:///C:/Users/rohini/OneDrive/Desktop/AI-AGENTS-Costumer-Support-demo/notification_tools.py:14:0-139:9) (real SMTP if configured).
+
+4. **Notifications**  
+   - Emails: immediate SMTP send. Falls back to mock message if credentials are missing.
+   - SMS/WhatsApp: placeholders ready for Twilio integration.
+
+---
+
+## Data Files
+
+- `users.csv` – registered customers
+- [claims.csv](cci:7://file:///C:/Users/rohini/OneDrive/Desktop/AI-AGENTS-Costumer-Support-demo/Car-Warranty-System/data/claims.csv:0:0-0:0) – warranty claims
+- `customer_vehicles.csv` – vehicle registry with CCP flags
+- `warranties.csv` – extended/CCP warranties
+- `service_centers.csv` – partner locations
+- [ccp_packages.csv](cci:7://file:///c:/Users/rohini/OneDrive/Desktop/AI-AGENTS-Costumer-Support-demo/Car-Warranty-System/data/ccp_packages.csv:0:0-0:0) – package descriptions
+- [warranty_policies.md](cci:7://file:///C:/Users/rohini/OneDrive/Desktop/AI-AGENTS-Costumer-Support-demo/Car-Warranty-System/data/warranty_policies.md:0:0-0:0) / [vectors.json](cci:7://file:///C:/Users/rohini/OneDrive/Desktop/AI-AGENTS-Costumer-Support-demo/Car-Warranty-System/data/vectors.json:0:0-0:0) – knowledge base & embeddings
+
+All CSVs use simple headers and can be edited for demos.
+
+---
+
+## Common Workflows
+
+| Workflow                     | Code path                         | Output |
+|-----------------------------|-----------------------------------|--------|
+| Login/Register              | [main.py](cci:7://file:///c:/Users/rohini/OneDrive/Desktop/AI-AGENTS-Costumer-Support-demo/main.py:0:0-0:0)                         | Updates `users.csv`, session state |
+| Check warranty status       | `check_warranty_status` tool      | Looks up by vehicle registration |
+| File CCP claim              | `file_ccp_claim` in [core.py](cci:7://file:///c:/Users/rohini/OneDrive/Desktop/AI-AGENTS-Costumer-Support-demo/core.py:0:0-0:0)     | Adds entry to [claims.csv](cci:7://file:///C:/Users/rohini/OneDrive/Desktop/AI-AGENTS-Costumer-Support-demo/Car-Warranty-System/data/claims.csv:0:0-0:0), sends email |
+| Book service appointment    | `book_service_appointment` tool   | Generates confirmation, email |
+| Send QA responses           | AI chat via `customer_support.py` | Context-aware LLM replies |
+
+---
+
+## Testing
+
+Manual testing is recommended:
+
+1. Start Streamlit.
+2. Register a test user.
+3. Verify warranty/CCP lookup for a vehicle (e.g., `DL05YY5678`).
+4. File a claim and watch the terminal for email success.
+5. Check your email inbox/spam.
+6. Book an appointment and confirm instructions display correctly.
+
+---
+
+## Troubleshooting
+
+| Issue | Cause | Fix |
+|-------|-------|-----|
+| **`ModuleNotFoundError: streamlit`** | venv not activated or dependencies missing | Activate venv and run `pip install -r requirements.txt` |
+| **`ModuleNotFoundError: langchain_groq`** | Groq integration missing | Ensure requirements installed |
+| **Prompt tokens exceed limit (413)** | Large context sent to Groq | Switch to higher tier plan or reduce context |
+| **Email reports “Mock delivery”** | SMTP env vars missing or invalid | Set `SMTP_EMAIL`, `SMTP_PASSWORD`, `SMTP_SERVER`, `SMTP_PORT`, restart app |
+| **Google blocked sign-in** | App password or security alert pending | Approve in Gmail security portal and retry |
+| **Vectors missing** | [vectors.json](cci:7://file:///C:/Users/rohini/OneDrive/Desktop/AI-AGENTS-Costumer-Support-demo/Car-Warranty-System/data/vectors.json:0:0-0:0) deleted or invalid | On startup the system will regenerate embeddings (requires HuggingFace API key in [conf.py](cci:7://file:///c:/Users/rohini/OneDrive/Desktop/AI-AGENTS-Costumer-Support-demo/conf.py:0:0-0:0) if you change model) |
+
+---
+
+## Security Notes
+
+- `.env` is gitignored; don’t commit secrets.
+- Use App Passwords for Gmail; never store your actual password.
+- Rotate API keys regularly.
+- For production, enforce HTTPS and secure storage for user data.
+
+---
+
+## Roadmap Ideas
+
+- Integrate real Twilio SMS/WhatsApp notifications.
+- Add booking calendar integration.
+- Deploy to Streamlit Cloud/Azure/GCP with secret management.
+- Add automated tests for tools and data loaders.
+- Extend knowledge base beyond warranties (service FAQs, recall information).
+
+---
+
+## Contributors
+
+Built for demo purposes by Rohini Koli and enhanced with AI assistance.

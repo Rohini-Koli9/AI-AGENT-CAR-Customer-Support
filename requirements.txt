@@ -190,11 +190,25 @@ typing_extensions==4.12.2
 tzdata==2024.1
 urllib3==2.2.2
 uvicorn==0.30.6
-uvloop==0.20.0
-watchdog==5.0.0
+watchdog==4.0.2
 watchfiles==0.24.0
 websocket-client==1.8.0
 websockets==13.0.1
 wrapt==1.16.0
 yarl==1.9.4
 zipp==3.20.1
+
+# New Agentic Features - Optional Dependencies
+# Uncomment and install based on which features you want to enable
+
+# For SMS/WhatsApp notifications (Twilio)
+# twilio>=9.0.0
+
+# For OCR (reading text from images)
+# pytesseract>=0.3.10
+
+# For scheduling proactive tasks
+# APScheduler>=3.10.4
+
+# For email with attachments
+# email-validator>=2.1.0

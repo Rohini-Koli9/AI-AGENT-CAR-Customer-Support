@@ -1,0 +1,16 @@
+center_id,center_name,city,address,phone,email,latitude,longitude
+1,Delhi Service Center - Mayur Vihar,Delhi,Plot No 15, Mayur Vihar Phase 1, Delhi - 110091,011-22751234,service.mayurvihar@marutisuzuki.com,28.6139,77.2975
+2,Delhi Service Center - Dwarka,Delhi,Sector 10, Dwarka, New Delhi - 110075,011-25081234,service.dwarka@marutisuzuki.com,28.5921,77.0460
+3,Mumbai Service Center - Andheri,Mumbai,Link Road, Andheri West, Mumbai - 400053,022-26731234,service.andheri@marutisuzuki.com,19.1136,72.8697
+4,Mumbai Service Center - Borivali,Mumbai,SV Road, Borivali West, Mumbai - 400092,022-28911234,service.borivali@marutisuzuki.com,19.2403,72.8565
+5,Bangalore Service Center - Whitefield,Bangalore,ITPL Main Road, Whitefield, Bangalore - 560066,080-28451234,service.whitefield@marutisuzuki.com,12.9698,77.7499
+6,Bangalore Service Center - Yeshwanthpur,Bangalore,Tumkur Road, Yeshwanthpur, Bangalore - 560022,080-23721234,service.yeshwanthpur@marutisuzuki.com,13.0280,77.5385
+7,Pune Service Center - Kothrud,Pune,Mumbai-Bangalore Highway, Kothrud, Pune - 411038,020-25431234,service.kothrud@marutisuzuki.com,18.5074,73.8077
+8,Pune Service Center - Hadapsar,Pune,Solapur Road, Hadapsar, Pune - 411028,020-26821234,service.hadapsar@marutisuzuki.com,18.5089,73.9260
+9,Ahmedabad Service Center - Satellite,Ahmedabad,SG Highway, Satellite, Ahmedabad - 380015,079-26931234,service.satellite@marutisuzuki.com,23.0258,72.5873
+10,Ahmedabad Service Center - Maninagar,Ahmedabad,Maninagar Railway Station Road, Ahmedabad - 380008,079-25461234,service.maninagar@marutisuzuki.com,23.0105,72.6069
+11,Chennai Service Center - Anna Nagar,Chennai,Poonamallee High Road, Anna Nagar, Chennai - 600040,044-26151234,service.annanagar@marutisuzuki.com,13.0878,80.2085
+12,Hyderabad Service Center - Kukatpally,Hyderabad,KPHB Colony, Kukatpally, Hyderabad - 500072,040-23111234,service.kukatpally@marutisuzuki.com,17.4948,78.3911
+13,Kolkata Service Center - Salt Lake,Kolkata,Sector V, Salt Lake, Kolkata - 700091,033-23571234,service.saltlake@marutisuzuki.com,22.5726,88.4361
+14,Jaipur Service Center - Malviya Nagar,Jaipur,Tonk Road, Malviya Nagar, Jaipur - 302017,0141-27421234,service.malviyanagar@marutisuzuki.com,26.8520,75.8103
+15,Lucknow Service Center - Gomti Nagar,Lucknow,Vibhuti Khand, Gomti Nagar, Lucknow - 226010,0522-23451234,service.gomtinagar@marutisuzuki.com,26.8467,80.9462

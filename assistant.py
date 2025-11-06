@@ -20,7 +20,7 @@ else:
     user_id = 101
 
 thread_id = str(uuid.uuid4())
-user_info = users_df[users_df['user_id'] == int(user_id)]
+user_info = customers_df[customers_df['user_id'] == int(user_id)]
 user_info = user_info.to_dict(orient='records')[0]
 config = {
     "configurable": {
@@ -45,29 +45,39 @@ def chatloop(prompt):
                 {"messages": ("user", prompt)}, config
             )
             msg = all_msg.get('messages')[-1]
-            if msg == "Can you clarify your request please!":
+            
+            # Check if msg is a string (error case)
+            if isinstance(msg, str):
+                print(f"Received string response: {msg}")
                 return msg
-
-            clean_message = msg.content
-            if "error" in clean_message.lower() or "wait" in clean_message.lower():
+            
+            # Get the message content
+            clean_message = msg.content if hasattr(msg, 'content') else str(msg)
+            
+            # Check for error indicators but don't retry for normal messages
+            if "having trouble processing" in clean_message.lower():
                 print(f"An error has occurred: {clean_message}.")
-                retry_count += 1# Increment retry counter
-                prompt = "Please provide a smaller input."
+                retry_count += 1  # Increment retry counter
+                prompt = "Please help me with my request."
                 continue  # Retry the chat loop with the same prompt
 
             print(clean_message)
             try:
-                print(msg.response_metadata['token_usage']['total_tokens'])
+                if hasattr(msg, 'response_metadata'):
+                    print(msg.response_metadata.get('token_usage', {}).get('total_tokens', 'N/A'))
             except Exception:
-                continue
+                pass
 
             return str(clean_message)  # Return only the cleaned response
 
         except Exception as e:
-            print(e)
-            print("Please wait a moment and I will try again. Error:", e)
+            print(f"Exception in chatloop: {e}")
             retry_count += 1  # Increment retry counter
-            prompt = "Please provide a smaller input."
+            if retry_count < max_retries:
+                prompt = "Please help me with my previous request."
+                continue
+            else:
+                break
 
 
     return "Can you clarify your request please!"

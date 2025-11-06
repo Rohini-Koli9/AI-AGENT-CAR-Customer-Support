@@ -1,0 +1,4 @@
+package_id,package_name,duration_years,max_kilometers,price,coverage_details
+1,CCP 1 Year,1,25000,3500,"Engine damage from water entry (hydrolock), adulterated fuel damage, rodent damage to wiring, insect damage to components"
+2,CCP 2 Year,2,45000,5500,"Engine damage from water entry (hydrolock), adulterated fuel damage, rodent damage to wiring, insect damage to components"
+3,CCP 3 Year,3,60000,7500,"Engine damage from water entry (hydrolock), adulterated fuel damage, rodent damage to wiring, insect damage to components"

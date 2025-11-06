@@ -1,0 +1,13 @@
+claim_id,vehicle_registration,claim_type,description,filing_date,status,service_center,estimated_cost,resolution_date
+1,DL05YY5678,water_damage,Engine seized due to waterlogging during monsoon,15/08/2024,completed,Delhi Service Center - Mayur Vihar,45000,22/08/2024
+2,MH12AB3456,rodent_damage,Wiring harness damaged by rodents in parking area,10/09/2024,completed,Mumbai Service Center - Andheri,8500,15/09/2024
+3,KA03IJ9012,fuel_damage,Engine malfunction due to adulterated fuel,22/09/2024,approved,Bangalore Service Center - Whitefield,32000,
+4,DL12MN7890,insect_damage,ECU damage due to insect infestation,05/10/2024,submitted,Delhi Service Center - Dwarka,12000,
+5,GJ01UV3456,water_damage,Water entered engine compartment during heavy rains,18/10/2024,submitted,Ahmedabad Service Center - Satellite,38000,
+6,DL05YY5678,rodent_damage,Battery cable damage by rodents,02/11/2024,rejected,Delhi Service Center - Mayur Vihar,3500,08/11/2024
+7,MH14KL3456,fuel_damage,Fuel injector damage from contaminated fuel,12/10/2024,approved,Pune Service Center - Kothrud,25000,
+8,DL05YY5678,water_damage,"Engine stopped working due to water ingress, suspected hydrolock.",06/11/2025,submitted,Ghaziabad AutoCare,0,
+9,DL05YY5678,water_damage,Engine stopped working due to water damage,06/11/2025,submitted,AutoCare Ghaziabad,0,
+10,DL05YY5678,water_damage,Engine stopped working due to water entry,06/11/2025,submitted,AutoCare Ghaziabad,0,
+11,DL05YY5678,water_damage,Engine stopped working due to water damage. Water entry suspected during recent rainstorm.,06/11/2025,submitted,Plot No 15,0,
+12,DL05YY5678,water_damage,Engine stopped working due to water entry,06/11/2025,submitted,Plot No 15,0,
